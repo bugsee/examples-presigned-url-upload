@@ -49,3 +49,6 @@ generated/
 
 
 BGSSdkVersion.h
+
+# Dependency directories
+server/node_modules/
