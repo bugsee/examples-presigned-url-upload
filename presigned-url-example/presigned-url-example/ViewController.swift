@@ -8,6 +8,8 @@
 
 import UIKit
 
+let LocalServerAddress = "http://x.x.x.x:3000"
+
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
@@ -67,16 +69,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         urlRequest.setValue("testImage", forHTTPHeaderField: "fileName")
 
         URLSession.shared.uploadTask(with: urlRequest, from:data) { (data, response, error) in
-            if error != nil {
-                print(error!)
-            }else{
-                print(String.init(data: data!, encoding: .utf8)!);
-            }
-            }.resume();
+                if error != nil {
+                    print(error!)
+                }else{
+                    print(response!);
+                    print(String.init(data: data!, encoding: .utf8)!);
+                }
+            }.resume()
     }
 
     func requestSignedUrl(completion: @escaping ((_ url: URL, _ method: String) -> Void)) {
-        var urlRequest = URLRequest.init(url: URL.init(string: "http://192.168.0.26:3000/users/testUser/objects")!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 60);
+        var urlRequest = URLRequest.init(url: URL.init(string: "\(LocalServerAddress)/users/testUser/objects")!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 60);
         urlRequest.httpMethod = "POST";
 
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
